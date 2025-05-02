@@ -32,7 +32,7 @@ public class Tournament {
     @ManyToOne
     private Season season;
 
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Match> matches;
 
 }

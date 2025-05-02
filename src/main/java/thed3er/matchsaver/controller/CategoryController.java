@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import thed3er.matchsaver.domain.Category;
 import thed3er.matchsaver.repository.CategoryRepository;
+import thed3er.matchsaver.repository.TournamentRepository;
 
 import java.util.List;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
+    private final TournamentRepository tournamentRepository;
 
-    public CategoryController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository, TournamentRepository tournamentRepository) {
         this.categoryRepository = categoryRepository;
+        this.tournamentRepository = tournamentRepository;
     }
 
     @GetMapping("/")
@@ -26,15 +29,6 @@ public class CategoryController {
         return "categories/list";
     }
 
-    public String listAllTournamentsInCategory(Model model, Long id) {
-        Category category = categoryRepository.findById(id).orElse(null);
-        if (category != null) {
-            model.addAttribute("category", category);
-            return "categories/tournaments";
-        } else {
-            return "redirect:/categories";
-        }
-    }
 
 
 }

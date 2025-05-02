@@ -5,10 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import thed3er.matchsaver.domain.Category;
-import thed3er.matchsaver.domain.Season;
-import thed3er.matchsaver.domain.Team;
-import thed3er.matchsaver.domain.Tournament;
+import thed3er.matchsaver.domain.*;
 import thed3er.matchsaver.repository.*;
 
 import java.time.LocalDate;
@@ -88,10 +85,39 @@ public class MatchsaverApplication {
 						Team.builder()
 								.name("Tým B")
 								.category(categoryRepository.findByName("Mladší žáci"))
+								.build(),
+						Team.builder()
+								.name("Tým C")
+								.category(categoryRepository.findByName("Mladší žáci"))
 								.build()
 				));
 			}
 
+			if (matchRepository.count() == 0) {
+				System.out.println("Match generation...");
+				Team homeTeam = teamRepository.findByName("Tým A");
+				Team awayTeam = teamRepository.findByName("Tým B");
+				Team cTeam = teamRepository.findByName("Tým C");
+
+				matchRepository.saveAll(List.of(
+						Match.builder()
+								.homeTeam(homeTeam)
+								.awayTeam(awayTeam)
+								.homeTeamScore(4)
+								.awayTeamScore(3)
+								.overTime(true)
+								.tournament(tournamentRepository.findByName("1.turnaj"))
+								.build(),
+						Match.builder()
+								.homeTeam(homeTeam)
+								.awayTeam(cTeam)
+								.homeTeamScore(5)
+								.awayTeamScore(3)
+								.tournament(tournamentRepository.findByName("1.turnaj"))
+								.build()
+				));
+			}
+			System.out.println("All generation done");
 		};
 	}
 
