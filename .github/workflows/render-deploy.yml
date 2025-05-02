@@ -8,22 +8,46 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ secrets.JDBC_DATABASE_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.POSTGRES_DB }}
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.POSTGRES_USER }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: corretto
-          java-version: 21
+          distribution: temurin
+          java-version: 17
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for postgres..."
+            sleep 2
+          done
 
       - name: Build with Maven
         run: mvn clean package --file pom.xml
-
-      # Pokud používáte Docker deployment, můžete přidat i build Docker image
-      # - name: Build Docker image
-      #   run: docker build -t my-spring-boot-app .
 
       - name: Trigger Render Deployment
         env:
