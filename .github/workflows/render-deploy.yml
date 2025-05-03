@@ -30,10 +30,13 @@ jobs:
     name: Deploy to Render
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      deployments: write
 
     steps:
-      - name: Deploy to production
-        uses: johnbeynon/render-deploy-action@v0.0.8
+      - uses: JorgeLNJunior/render-deploy@v1.4.5
         with:
           service-id: ${{ secrets.SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_KEY }}
+          clear_cache: true
+          wait_deploy: true
