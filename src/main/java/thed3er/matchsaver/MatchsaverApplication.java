@@ -5,12 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import thed3er.matchsaver.domain.*;
 import thed3er.matchsaver.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@ImportRuntimeHints(ResourceRuntimeHints.class)
 @SpringBootApplication
 public class MatchsaverApplication {
 
