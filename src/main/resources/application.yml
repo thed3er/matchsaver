@@ -58,3 +58,8 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
+    gg.jte: DEBUG
+gg:
+  jte:
+    development-mode: false
+    use-precompiled-templates: true
