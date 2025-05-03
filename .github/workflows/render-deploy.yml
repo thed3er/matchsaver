@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://TOPsjKl4MgDCH2XdrHYtfviqI6pEDjBo@dpg-d0au67p5pdvs73c5mrt0-a/matchsaver
+      SPRING_DATASOURCE_URL: ${{ secrets.JDBC_DATABASE_URL }}
       SPRING_DATASOURCE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
       SPRING_DATASOURCE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
 
