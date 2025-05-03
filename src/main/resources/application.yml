@@ -3,11 +3,38 @@ gg:
     developmentMode: true
 
 spring:
+  application:
+    name: myapp
   main:
     allow-bean-definition-overriding: true
-  application:
-    name: matchsaver
 
+---
+# dev profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/matchsaver
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+
+---
+
+# prod profile
+spring:
+  config:
+    activate:
+      on-profile: prod
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
@@ -20,9 +47,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
 
 logging:
   level:
-    org.springframework.security: DEBUG
-    org.springframework.web: DEBUG
+    org.springframework.security: ERROR
+    org.springframework.web: ERROR

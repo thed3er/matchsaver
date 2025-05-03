@@ -5,10 +5,10 @@ FROM amazoncorretto:21
 WORKDIR /app
 
 # Kopírování JAR souboru aplikace
-COPY app.jar .
+COPY target/matchsaver-1.0.jar .
 
 # Exponování portu aplikace
 EXPOSE 8080
 
 # Spuštění aplikace
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "matchsaver-1.0.jar"]
