@@ -51,5 +51,5 @@ spring:
 
 logging:
   level:
-    org.springframework.security: ERROR
-    org.springframework.web: ERROR
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
