@@ -9,25 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: ${{ secrets.JDBC_DATABASE_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     env:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.POSTGRES_DB }}
-      SPRING_DATASOURCE_USERNAME: ${{ secrets.POSTGRES_USER }}
-      SPRING_DATASOURCE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://TOPsjKl4MgDCH2XdrHYtfviqI6pEDjBo@dpg-d0au67p5pdvs73c5mrt0-a/matchsaver
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.JDBC_DATABASE_USERNAME }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.JDBC_DATABASE_PASSWORD }}
 
     steps:
       - name: Checkout Code

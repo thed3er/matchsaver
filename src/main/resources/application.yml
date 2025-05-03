@@ -9,9 +9,10 @@ spring:
     name: matchsaver
 
   datasource:
-    url: ${JDBC_DATABASE_URL}
+    url: jdbc:postgresql://TOPsjKl4MgDCH2XdrHYtfviqI6pEDjBo@dpg-d0au67p5pdvs73c5mrt0-a/matchsaver
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
@@ -19,6 +20,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 
 logging:
   level:
