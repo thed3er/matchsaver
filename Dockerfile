@@ -1,11 +1,20 @@
 # Použití oficiálního JDK 21 base image
-FROM amazoncorretto:21
+FROM container-registry.oracle.com/graalvm/native-image:21 AS builder
 
-WORKDIR /usr/app
+WORKDIR /app
 
-COPY ./target/matchsaver-1.0.jar ./matchsaver-1.0.jar
+# Zkopírování pom.xml a zdrojových kódů do kontejneru
+COPY . .
+
+RUN ./mvnw clean package
+
+FROM container-registry.oracle.com/graalvm/native-image:21 AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8080
 
 # Spuštění aplikace
-ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "matchsaver-1.0.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
