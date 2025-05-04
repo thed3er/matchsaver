@@ -30,9 +30,10 @@ public class SeasonController {
         this.tournamentRepository = tournamentRepository;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String listSeasons(Model model) {
-        model.addAttribute("seasons", seasonRepository.findAll());
+        List<Season> seasons = seasonRepository.findAll();
+        model.addAttribute("seasons", seasons);
         return "pages/seasons";
     }
 
