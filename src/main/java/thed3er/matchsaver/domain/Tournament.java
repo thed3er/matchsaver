@@ -25,6 +25,16 @@ public class Tournament {
 
     private String location;
 
+    private String createdBy;
+
+    private String updatedBy;
+
+    private LocalDate createdAt;
+
+    private LocalDate updatedAt;
+
+    private boolean active = true;
+
     @ManyToOne
     private Category category;
 
