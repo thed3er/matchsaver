@@ -3,17 +3,18 @@ package thed3er.matchsaver.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import thed3er.matchsaver.repository.CategoryRepository;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
-    public HomeController(CategoryRepository categoryRepository) {
+    public HomeController() {
     }
 
     @RequestMapping("")
-    public String home(Model model) {
-        return "pages/index";
+    public ModelAndView home(Model model) {
+
+        return new ModelAndView("redirect:/seasons");
     }
 }

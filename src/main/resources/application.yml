@@ -29,6 +29,10 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
 
+gg:
+  jte:
+    development-mode: true
+
 ---
 
 # prod profile

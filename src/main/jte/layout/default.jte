@@ -18,10 +18,10 @@
 <body class="bg-gray-100 text-gray-800">
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-white text-lg font-bold">MatchSaver</a>
+            <a href="/seasons" class="text-white text-lg font-bold">MatchSaver</a>
             <div class="space-x-4">
-                <a href="/seasons" class="text-gray-300 hover:text-white">Sezóny</a>
-                <a href="/tournament/add" class="text-gray-300 hover:text-white">Přidat turnaj</a>
+                <a href="/seasons" class="text-gray-300 hover:text-white">Výsledky</a>
+                <a href="/login" class="text-gray-300 hover:text-white">Login</a>
             </div>
         </div>
     </nav>
