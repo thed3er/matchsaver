@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import thed3er.matchsaver.domain.*;
+import thed3er.matchsaver.model.CategoryEnum;
 import thed3er.matchsaver.repository.CategoryRepository;
 import thed3er.matchsaver.repository.SeasonRepository;
 import thed3er.matchsaver.repository.TeamRepository;
@@ -55,9 +56,9 @@ public class AdminController {
     }
 
     @GetMapping("/add/tournament")
-    public String saveTournament(Model model) {
+    public String addTournament(Model model) {
         model.addAttribute("tournament", new Tournament());
-        model.addAttribute("seasons", List.of(seasonRepository.findAllByVisible(true)));
+        model.addAttribute("seasons", seasonRepository.findAllByVisible(true));
         model.addAttribute("categories", categoryRepository.findAll());
         return "pages/save-tournament-with-matches";
     }
@@ -87,18 +88,22 @@ public class AdminController {
             match.setTournament(tournament);
         }
         Tournament savedTournament = tournamentRepository.save(tournament);
-        model.addAttribute("succesMessage", "Turnaj byl úspěšně uložen");
+        model.addAttribute("successMessage", "Turnaj byl úspěšně uložen");
         return "pages/admin/admin";
     }
 
-    @DeleteMapping("/delete/{tournamentId}")
+    @DeleteMapping("/delete/tournament/{tournamentId}")
     public String deleteTournament(Model model, @PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = tournamentRepository.findById(tournamentId).orElse(null);
-
         if (tournament != null) {
-            tournamentRepository.delete(tournament);
+            if (SecurityContextHolder.getContext().getAuthentication().getName().equals(tournament.getCreatedBy())) {
+                tournamentRepository.delete(tournament);
+                model.addAttribute("successMessage", "Turnaj byl úspěšně odstraněn");
+            } else {
+                model.addAttribute("errorMessage", "Nemáte oprávnění k odstranění tohoto turnaje");
+            }
         }
-        return "redirect:/seasons";
+        return "pages/admin/list-tournaments";
     }
 
     @GetMapping("/add/team")
@@ -108,7 +113,7 @@ public class AdminController {
     }
 
     @PostMapping("/save/team")
-    public String saveTeam(@RequestParam("category") List<Category> categories, @RequestParam("name") String name) {
+    public String saveTeam(@RequestParam("category") List<Category> categories, @RequestParam("name") String name, Model model) {
         for (Category category : categories) {
             if (category != null) {
                 Team team = new Team();
@@ -117,6 +122,22 @@ public class AdminController {
                 teamRepository.save(team);
             }
         }
+        model.addAttribute("successMessage", "Tým byl úspěšně uložen");
+        return "pages/admin/admin";
+    }
+
+    @GetMapping("/add/season")
+    public String addSeason(Model model) {
+        List<CategoryEnum> categories = List.of(CategoryEnum.values());
+        model.addAttribute("season", new Season());
+        model.addAttribute("categories", categories);
+        return "pages/admin/add-season";
+    }
+
+    @PostMapping("/save/season")
+    public String createSeason(@ModelAttribute Season season, Model model) {
+        seasonRepository.save(season);
+        model.addAttribute("successMessage", season);
         return "pages/admin/admin";
     }
 }

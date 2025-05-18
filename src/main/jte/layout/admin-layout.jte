@@ -20,6 +20,7 @@
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-white text-lg font-bold">MatchSaver</a>
         <div class="space-x-4">
+            <a href="/admin/add/season" class="text-gray-300 hover:text-white">Přidat sezónu</a>
             <a href="/admin/add/team" class="text-gray-300 hover:text-white">Přidat tým</a>
             <a href="/admin/tournaments" class="text-gray-300 hover:text-white">Seznam turnajů</a>
             <a href="/admin/add/tournament" class="text-gray-300 hover:text-white">Přidat turnaj</a>

@@ -22,6 +22,7 @@ public class Season {
     @Column(nullable = false, unique = true)
     private String name;
 
+    // Property to indicate if the season is active (latest season)
     private Boolean visible = false;
 
     @OneToMany(mappedBy = "season", fetch = FetchType.LAZY)
