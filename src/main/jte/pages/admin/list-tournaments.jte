@@ -7,10 +7,25 @@
 @param Long selectedSeasonId = null
 @param Long selectedCategoryId = null
 
+@param String successMessage = null
+@param String errorMessage = null
+
 @template.layout.admin-layout(content =
 @`
     <div class="space-y-6">
         <h1 class="text-2xl font-bold text-center mb-6 text-blue-700 md:text-3xl">Seznam turnajů</h1>
+
+        @if(successMessage != null)
+            <div class="bg-green-100 border border-green-400 text-green-700 p-6 mb-6 rounded" role="alert">
+                <span class="block sm:inline">${successMessage}</span>
+            </div>
+        @endif
+
+        @if(errorMessage != null)
+            <div class="bg-red-100 border border-red-400 text-red-700 p-6 mb-6 rounded" role="alert">
+                <span class="block sm:inline">${errorMessage}</span>
+            </div>
+        @endif
 
         <form class="bg-white rounded-lg shadow-md p-6 mb-6 flex space-x-4"
               hx-get="/admin/tournaments"

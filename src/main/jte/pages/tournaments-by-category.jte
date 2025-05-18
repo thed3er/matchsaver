@@ -26,9 +26,12 @@
                 </li>
             @endfor
         </ul>
-        <a  href="/team/stats?season=${seasonId}&category=${categoryId}"
-            class="btn space-y-2 px-4 py-3 bg-blue-100 hover:bg-blue-300 text-gray-800 rounded-md">
-            Zobraz bodovou tabulku ze všech turnajů
-        </a>
+
+        <div class="mt-5 px-4 py-3 bg-blue-100 hover:bg-blue-300 text-gray-800 rounded-md">
+            <a  href="/team/stats?season=${seasonId}&category=${categoryId}"
+                class="btn">
+                Zobraz bodovou tabulku ze všech turnajů
+            </a>
+        </div>
     @endif
 </div>

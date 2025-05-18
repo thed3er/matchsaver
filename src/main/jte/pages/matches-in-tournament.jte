@@ -62,5 +62,11 @@ content = @`
 
         @endif
     </div>
+    <div class="mt-5 px-4 py-3 bg-blue-100 hover:bg-blue-300 text-gray-800 rounded-md">
+        <a href="/seasons?season=${matches.getFirst().getTournament().getSeason().getId()}&category=${matches.getFirst().getTournament().getCategory().getId()}"
+           class="btn">
+            Zpět na výběr kategorie
+        </a>
+    </div>
 `
 )
