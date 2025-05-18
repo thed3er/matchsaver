@@ -8,4 +8,6 @@ import thed3er.matchsaver.domain.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Category findByName(String name);
+
+    Category getCategoriesById(Long id);
 }

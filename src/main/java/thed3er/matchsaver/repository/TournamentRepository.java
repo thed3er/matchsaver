@@ -14,9 +14,9 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
 
     Set<Tournament> findBySeason_IdAndCategory_IdAndActive(Long seasonId, Long categoryId, boolean active);
 
-    List<Tournament> findBySeason(Season season);
+    Set<Tournament> findBySeason(Season season);
 
     Tournament findByName(String name);
 
-    List<Tournament> findByCategory(Category category);
+    Set<Tournament> findByCategory(Category category);
 }
