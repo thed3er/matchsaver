@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import thed3er.matchsaver.domain.*;
+import thed3er.matchsaver.model.CategoryEnum;
 import thed3er.matchsaver.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ImportRuntimeHints(ResourceRuntimeHints.class)
 @SpringBootApplication
@@ -55,11 +57,12 @@ public class MatchsaverApplication {
 			// Categories
 			if (categoryRepository.count() == 0) {
 				System.out.println("Category generation...");
-				categoryRepository.saveAll(List.of(
-						Category.builder().name("Mladší žáci").build(),
-						Category.builder().name("Starší žáci").build(),
-						Category.builder().name("Dorost").build()
-				));
+				List<CategoryEnum> categoriesEnum = List.of(CategoryEnum.values());
+
+				categoryRepository.saveAll(categoriesEnum.stream()
+						.map(categoryEnum -> Category.builder().name(categoryEnum.name).build())
+						.collect(Collectors.toList()));
+
 			}
 
 			// Tournaments

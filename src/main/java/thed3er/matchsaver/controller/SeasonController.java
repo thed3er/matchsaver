@@ -31,8 +31,16 @@ public class SeasonController {
     }
 
     @RequestMapping("")
-    public String listSeasons(Model model) {
+    public String listSeasons(@RequestParam(required = false) Season season, @RequestParam(required = false) Category category, Model model) {
         List<Season> seasons = seasonRepository.findAll();
+        if (season != null) {
+            model.addAttribute("selectedSeason", season);
+        }
+        if (category != null) {
+            model.addAttribute("selectedCategory", category);
+        }
+        //model.addAttribute("selectedSeason", season);
+
         model.addAttribute("seasons", seasons);
         return "pages/seasons";
     }
@@ -49,28 +57,29 @@ public class SeasonController {
     }
 
     @GetMapping("/tournamentsByCategory")
-    public String listAllTournamentsInCategory(Model model, @RequestParam("category") Long categoryId, @RequestParam("season") Long seasonId) {
-        Set<Tournament> tournaments = tournamentRepository.findBySeason_IdAndCategory_Id(seasonId, categoryId);
-        if (!tournaments.isEmpty()) {
-            model.addAttribute("categoryId", categoryId);
-            model.addAttribute("seasonId", seasonId);
-            model.addAttribute("tournaments", tournaments);
-            return "pages/tournaments-by-category";
-        } else {
-            return "redirect:/seasons/";
-        }
+    public String listAllTournamentsInCategory(Model model, @RequestParam("category") Long categoryId, @RequestParam("seasonIdInput") Long seasonId) {
+        Set<Tournament> tournaments = tournamentRepository.findBySeason_IdAndCategory_IdAndActive(seasonId, categoryId, true);
+
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("seasonId", seasonId);
+        model.addAttribute("tournaments", tournaments);
+        return "pages/tournaments-by-category";
+
     }
 
     @GetMapping("/categoriesBySeason")
-    public String getCategoriesBySeason(Model model, @RequestParam("season") Long seasonId) {
+    public String getCategoriesBySeason(Model model, @RequestParam("season") Long seasonId, @RequestParam(required = false) Long categoryId) {
         Season season = seasonRepository.findById(seasonId).orElse(null);
         if (season != null) {
-            List<Tournament> tournaments = tournamentRepository.findBySeason(season);
+            Set<Tournament> tournaments = tournamentRepository.findBySeason(season);
             Set<Category> categories = tournaments.stream()
                     .map(Tournament::getCategory)
                     .collect(Collectors.toSet());
 
             model.addAttribute("categories", categories);
+            if (categoryId != null) {
+                model.addAttribute("selectedCategory", categoryRepository.getCategoriesById(categoryId));
+            }
             model.addAttribute("season", season);
             return "pages/categories-by-season";
         } else {

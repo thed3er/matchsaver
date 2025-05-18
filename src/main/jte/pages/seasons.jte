@@ -1,7 +1,10 @@
 @import thed3er.matchsaver.domain.Season
+@import thed3er.matchsaver.domain.Category
 @import java.util.List
 
 @param List<Season> seasons
+@param Season selectedSeason = null
+@param Category selectedCategory = null
 
 @template.layout.default(
 content = @`
@@ -20,14 +23,18 @@ content = @`
                             id="season"
                             name="season"
                             hx-get="/seasons/categoriesBySeason"
-                            hx-trigger="change"
+                            hx-trigger="change,load[${selectedSeason != null}]"
                             hx-target="#categories-container"
-                            hx-include="[name='season']"
+                            hx-vals='js:{"season": document.getElementById("season").value,
+                                                        "categoryId": document.getElementById("season")?.getAttribute("data-jtevalue")
+                                                        }'
+                            data-jtevalue="${selectedCategory!= null ? selectedCategory.getId() : 0}"
                             class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                     >
-                        <option> Vyberte sezónu</option>
+                        <option>Vyberte sezónu</option>
                         @for(Season season : seasons)
-                            <option value="${season.getId()}">${season.getName()}</option>
+                            <option value="${season.getId()}"
+                                    selected="${selectedSeason != null && selectedSeason.getId().equals(season.getId())}">${season.getName()}</option>
                         @endfor
                     </select>
                 </div>
