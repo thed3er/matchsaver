@@ -25,7 +25,7 @@
             </div>
         </div>
     </nav>
-    <div class="container mx-auto px-4 py-6 max-w-md md:max-w-2xl lg:max-w-4xl">
+    <div class="container mx-auto px-4 py-6 max-w-lg md:max-w-2xl lg:max-w-4xl">
         ${content}
     </div>
 </body>

@@ -16,31 +16,33 @@ content = @`
                 <p class="text-gray-600 italic">Žádné zápasy nebyly nalezeny.</p>
             </div>
         @else
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
                 <ul class="divide-y divide-gray-200">
                     @for(Match match : matches)
                         <li class="py-4 first:pt-0 last:pb-0">
-                            <div class="flex flex-col space-y-2 md:flex-row md:items-center md:justify-between md:space-y-0">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex flex-col items-center">
-                                        <span class="font-medium text-blue-800">${match.getHomeTeam().getName()}</span>
-                                        <span class="text-lg font-bold">${match.getHomeTeamScore()}</span>
-                                    </div>
+                            <div class="flex items-center justify-between">
+                                <div class="w-[40%] text-center">
+                                    <span class="font-medium text-blue-800">${match.getHomeTeam().getName()}</span>
+                                    <span class="text-lg font-bold block">${match.getHomeTeamScore()}</span>
+                                </div>
 
-                                    <div class="mx-4 text-gray-500">
-                                        vs
-                                    </div>
-
-                                    <div class="flex flex-col items-center">
-                                        <span class="font-medium text-red-800">${match.getAwayTeam().getName()}</span>
-                                        <span class="text-lg font-bold">${match.getAwayTeamScore()}</span>
+                                <div class="w-[20%] text-center text-gray-500">
+                                    vs
+                                    @if(match.isOverTime())
+                                        <div class="text-md font-bold mt-1">
+                                            <span class="bg-gray-200 px-2 py-1 rounded inline-block">P</span>
+                                        </div>
+                                    @endif
+                                    <div class="text-sm mt-1">
+                                        <span class="bg-gray-100 px-3 py-1 rounded-full inline-block">
+                                            ${match.getTournament().getName()}
+                                        </span>
                                     </div>
                                 </div>
 
-                                <div class="text-sm text-gray-500">
-                                    <span class="bg-gray-100 px-2 py-1 rounded">
-                                        ${match.getTournament().getName()}
-                                    </span>
+                                <div class="w-[40%] text-center">
+                                    <span class="font-medium text-red-800">${match.getAwayTeam().getName()}</span>
+                                    <span class="text-lg font-bold block">${match.getAwayTeamScore()}</span>
                                 </div>
                             </div>
                         </li>
@@ -48,25 +50,25 @@ content = @`
                 </ul>
             </div>
 
-            <h2 class="text-xl font-semibold text-center mt-6 mb-4 text-gray-700">Mini tabulka výsledků</h2>
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-center mt-8 mb-4 text-gray-700">Mini tabulka výsledků</h2>
+            <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
                 <ul class="divide-y divide-gray-200">
                     @for(Map.Entry<String, TeamStats> entry : teamStats.entrySet())
                         <li class="py-3 flex justify-between items-center">
                             <span class="font-medium">${entry.getKey()}</span>
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold">${entry.getValue().getTotalPoints()} bodů</span>
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">${entry.getValue().getTotalPoints()} bodů</span>
                         </li>
                     @endfor
                 </ul>
             </div>
-
         @endif
-    </div>
-    <div class="mt-5 px-4 py-3 bg-blue-100 hover:bg-blue-300 text-gray-800 rounded-md">
-        <a href="/seasons?season=${matches.getFirst().getTournament().getSeason().getId()}&category=${matches.getFirst().getTournament().getCategory().getId()}"
-           class="btn">
-            Zpět na výběr kategorie
-        </a>
+
+        <div class="mt-8 text-center">
+            <a href="/seasons?season=${matches.getFirst().getTournament().getSeason().getId()}&category=${matches.getFirst().getTournament().getCategory().getId()}"
+               class="block w-full px-6 py-3 bg-blue-100 hover:bg-blue-300 text-gray-800 rounded-md transition-colors duration-200">
+                Zpět na výběr kategorie
+            </a>
+        </div>
     </div>
 `
 )
