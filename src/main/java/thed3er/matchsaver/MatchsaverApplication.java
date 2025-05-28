@@ -37,7 +37,7 @@ public class MatchsaverApplication {
 	@Autowired
 	MatchRepository matchRepository;
 
-	@Bean
+//	@Bean
 	public CommandLineRunner seedData() {
 		return args -> {
 			System.out.println("Matchsaver application started successfully!");
