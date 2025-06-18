@@ -36,12 +36,12 @@ jobs:
       - name: Maven build native image
         run: mvn -Pnative package
 
-#      - name: Publish to Registry
-#        uses: elgohr/Publish-Docker-Github-Action@v5
-#        with:
-#          name: jeldies43/matchsaver
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        with:
+          name: jeldies43/matchsaver
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
   deploy:
     name: Deploy to Render
     needs: [build]
